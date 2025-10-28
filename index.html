@@ -1717,8 +1717,7 @@
             }, [step, progress]);
             
             const handleConfirm = () => {
-                // Apply the fix immediately when user confirms
-                onConfirm();
+                // Just start the animation, don't apply fix yet
                 setStep('executing');
                 setProgress(0);
             };
@@ -1874,7 +1873,8 @@
             const [aiAgentRiskThreshold, setAIAgentRiskThreshold] = useState(3.0);
             const [baseAIAgentRisk, setBaseAIAgentRisk] = useState(1.8);
             const [tiEnabled, setTiEnabled] = useState(true);
-            const [appliedFixes, setAppliedFixes] = useState(new Set());
+            const [appliedFixes, setAppliedFixes] = useState(new Set()); // Saviynt AI fixes
+            const [simulatedFixes, setSimulatedFixes] = useState(new Set()); // Simulated fixes
             const [showAIModal, setShowAIModal] = useState(false);
             const [selectedRecommendation, setSelectedRecommendation] = useState(null);
             const [showPremiumModal, setShowPremiumModal] = useState(false);
@@ -1890,8 +1890,8 @@
             const calculateMaturityScore = () => {
                 let baseScore = 78; // Starting progress toward Level 4
                 
-                // Each applied fix adds progress
-                baseScore += appliedFixes.size * 3;
+                // Each applied fix adds progress (both AI and simulated)
+                baseScore += (appliedFixes.size + simulatedFixes.size) * 3;
                 
                 // Completed IT tasks add progress
                 baseScore += Math.min(completedTaskReductions * 5, 22);
@@ -1922,17 +1922,29 @@
                 return bScore - aScore;
             });
             
-            const totalRiskReduction = Array.from(appliedFixes).reduce((sum, fixId) => {
+            // Calculate risk reduction from AI fixes
+            const aiFixRiskReduction = Array.from(appliedFixes).reduce((sum, fixId) => {
                 const rec = sortedRecommendations.find(r => r.id === fixId);
                 return sum + (rec ? rec.riskReduction : 0);
             }, 0);
+            
+            // Calculate risk reduction from simulated fixes
+            const simulatedFixRiskReduction = Array.from(simulatedFixes).reduce((sum, fixId) => {
+                const rec = sortedRecommendations.find(r => r.id === fixId);
+                return sum + (rec ? rec.riskReduction : 0);
+            }, 0);
+            
+            const totalRiskReduction = aiFixRiskReduction + simulatedFixRiskReduction;
 
             const tiMultiplier = tiEnabled && tiAlerts.length > 0
                 ? tiAlerts.reduce((acc, alert) => acc + (alert.multiplier - 1), 1)
                 : 1;
 
+            // Add automatic access control reduction (blocks active threats)
+            const autoAccessControlReduction = autoAccessControlEnabled ? 0.5 : 0;
+            
             // Add completed task reductions to total risk reduction
-            const totalReduction = totalRiskReduction + completedTaskReductions;
+            const totalReduction = totalRiskReduction + completedTaskReductions + autoAccessControlReduction;
             const currentRisk = Math.max(0, (baseRisk * tiMultiplier) - totalReduction);
             const riskPercentage = (currentRisk / riskThreshold) * 100;
             const needleRotation = Math.min((riskPercentage / 100) * 180 - 90, 90);
@@ -1953,7 +1965,7 @@
                     const newApplied = new Set(appliedFixes);
                     newApplied.add(selectedRecommendation.id);
                     setAppliedFixes(newApplied);
-                    setSelectedRecommendation(null);
+                    // Don't clear selectedRecommendation here - let the modal complete its flow
                 }
             };
             
@@ -2250,11 +2262,27 @@
                                             +{industry.currency}{(baseRisk * tiMultiplier - baseRisk).toFixed(1)}{industry.suffix}
                                         </span>
                                     </div>
-                                    {totalRiskReduction > 0 && (
+                                    {simulatedFixRiskReduction > 0 && (
                                         <div className="risk-row">
-                                            <span className="risk-label">Simulated Fixes:</span>
+                                            <span className="risk-label">Simulated fix:</span>
+                                            <span className="risk-value" style={{ color: '#94a3b8' }}>
+                                                -{industry.currency}{simulatedFixRiskReduction.toFixed(1)}{industry.suffix}
+                                            </span>
+                                        </div>
+                                    )}
+                                    {aiFixRiskReduction > 0 && (
+                                        <div className="risk-row">
+                                            <span className="risk-label">Saviynt AI:</span>
                                             <span className="risk-value" style={{ color: '#00C48C' }}>
-                                                -{industry.currency}{totalRiskReduction.toFixed(1)}{industry.suffix}
+                                                -{industry.currency}{aiFixRiskReduction.toFixed(1)}{industry.suffix}
+                                            </span>
+                                        </div>
+                                    )}
+                                    {autoAccessControlReduction > 0 && (
+                                        <div className="risk-row">
+                                            <span className="risk-label">Auto Access Control:</span>
+                                            <span className="risk-value" style={{ color: '#00BCD4' }}>
+                                                -{industry.currency}{autoAccessControlReduction.toFixed(1)}{industry.suffix}
                                             </span>
                                         </div>
                                     )}
@@ -2618,7 +2646,7 @@
                                     </div>
                                     <div className="impact-stat">
                                         <div className="impact-stat-value">
-                                            {appliedFixes.size}
+                                            {appliedFixes.size + simulatedFixes.size}
                                         </div>
                                         <div className="impact-stat-label">Fixes Applied</div>
                                     </div>
@@ -2635,12 +2663,12 @@
                                 {sortedRecommendations.map((rec) => (
                                     <div 
                                         key={rec.id} 
-                                        className={`recommendation ${appliedFixes.has(rec.id) ? 'applied' : ''}`}
+                                        className={`recommendation ${(appliedFixes.has(rec.id) || simulatedFixes.has(rec.id)) ? 'applied' : ''}`}
                                     >
                                         <div className="recommendation-header">
                                             <div className="recommendation-title">
-                                                {appliedFixes.has(rec.id) ? '✅ ' : ''}{rec.title}
-                                                {rec.tiDriven && !appliedFixes.has(rec.id) && ' ⚠️'}
+                                                {(appliedFixes.has(rec.id) || simulatedFixes.has(rec.id)) ? '✅ ' : ''}{rec.title}
+                                                {rec.tiDriven && !appliedFixes.has(rec.id) && !simulatedFixes.has(rec.id) && ' ⚠️'}
                                             </div>
                                             <div className={`recommendation-priority ${rec.priority}`}>
                                                 {rec.priority}
@@ -2672,14 +2700,14 @@
                                             </div>
                                         </div>
                                         
-                                        {!appliedFixes.has(rec.id) && !assignedTaskIds.has(rec.id) ? (
+                                        {!appliedFixes.has(rec.id) && !simulatedFixes.has(rec.id) && !assignedTaskIds.has(rec.id) ? (
                                             <div className="recommendation-actions">
                                                 <button 
                                                     className="apply-button secondary"
                                                     onClick={() => {
-                                                        const newApplied = new Set(appliedFixes);
-                                                        newApplied.add(rec.id);
-                                                        setAppliedFixes(newApplied);
+                                                        const newSimulated = new Set(simulatedFixes);
+                                                        newSimulated.add(rec.id);
+                                                        setSimulatedFixes(newSimulated);
                                                     }}
                                                 >
                                                     Simulate Fix
@@ -2702,9 +2730,9 @@
                                                     Assign to IT
                                                 </button>
                                             </div>
-                                        ) : (appliedFixes.has(rec.id) || assignedTaskIds.has(rec.id)) ? (
+                                        ) : (appliedFixes.has(rec.id) || simulatedFixes.has(rec.id) || assignedTaskIds.has(rec.id)) ? (
                                             <div className="recommendation-actions">
-                                                {rec.automatable && (
+                                                {rec.automatable && appliedFixes.has(rec.id) && (
                                                     <button 
                                                         className="apply-button ai"
                                                         disabled
@@ -2718,7 +2746,20 @@
                                                         ✓ Fixed by Saviynt AI
                                                     </button>
                                                 )}
-                                                {assignedTaskIds.has(rec.id) && !appliedFixes.has(rec.id) && (
+                                                {simulatedFixes.has(rec.id) && (
+                                                    <button 
+                                                        className="apply-button secondary"
+                                                        disabled
+                                                        style={{
+                                                            opacity: 0.6,
+                                                            cursor: 'not-allowed',
+                                                            background: 'linear-gradient(135deg, #64748b 0%, #475569 100%)'
+                                                        }}
+                                                    >
+                                                        ✓ Simulated Fix Applied
+                                                    </button>
+                                                )}
+                                                {assignedTaskIds.has(rec.id) && !appliedFixes.has(rec.id) && !simulatedFixes.has(rec.id) && (
                                                     <button 
                                                         className="apply-button secondary"
                                                         disabled
@@ -2877,6 +2918,10 @@
                     const newUnlocked = new Set(unlockedFeatures);
                     newUnlocked.add(featureKey);
                     setUnlockedFeatures(newUnlocked);
+                    
+                    // Close the modal
+                    setShowPremiumModal(false);
+                    setSelectedPremiumFeature(null);
                 }
             };
             
