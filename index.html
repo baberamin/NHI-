@@ -688,6 +688,131 @@
             color: #00C48C;
         }
         
+        /* Security Maturity Styles */
+        .maturity-container {
+            background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+            border: 2px solid #00BCD4;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .maturity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .maturity-level {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .maturity-icon {
+            font-size: 48px;
+        }
+        
+        .maturity-info h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        
+        .maturity-info p {
+            font-size: 14px;
+            color: #94a3b8;
+        }
+        
+        .maturity-rank {
+            text-align: right;
+        }
+        
+        .maturity-rank-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #00BCD4;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+        
+        .maturity-rank-label {
+            font-size: 12px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .maturity-progress-section {
+            margin-bottom: 16px;
+        }
+        
+        .maturity-progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .maturity-progress-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #94a3b8;
+        }
+        
+        .maturity-progress-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #00BCD4;
+        }
+        
+        .maturity-progress-bar {
+            height: 12px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #334155;
+        }
+        
+        .maturity-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00BCD4 0%, #00C48C 100%);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+        }
+        
+        .maturity-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        
+        .maturity-stat {
+            text-align: center;
+            padding: 12px;
+            background: rgba(0, 188, 212, 0.05);
+            border: 1px solid rgba(0, 188, 212, 0.2);
+            border-radius: 8px;
+        }
+        
+        .maturity-stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        
+        .maturity-stat-label {
+            font-size: 11px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
         /* Table Styles */
         .data-table {
             width: 100%;
@@ -1743,7 +1868,7 @@
 
         // CISO Dashboard Component
         function CISODashboard({ onSwitchPersona, cisoFeed, onAssignPriority, assignedTaskIds, completedTaskReductions }) {
-            const [selectedIndustry, setSelectedIndustry] = useState('banking');
+            const [selectedIndustry] = useState('banking');
             const [riskThreshold, setRiskThreshold] = useState(5.0);
             const [baseRisk, setBaseRisk] = useState(3.2);
             const [aiAgentRiskThreshold, setAIAgentRiskThreshold] = useState(3.0);
@@ -1760,6 +1885,26 @@
             const chartInstance = useRef(null);
 
             const industry = industries[selectedIndustry];
+            
+            // Calculate Security Maturity Score
+            const calculateMaturityScore = () => {
+                let baseScore = 78; // Starting progress toward Level 4
+                
+                // Each applied fix adds progress
+                baseScore += appliedFixes.size * 3;
+                
+                // Completed IT tasks add progress
+                baseScore += Math.min(completedTaskReductions * 5, 22);
+                
+                // Cap at 100%
+                return Math.min(baseScore, 100);
+            };
+            
+            const maturityProgress = calculateMaturityScore();
+            const maturityLevel = maturityProgress === 100 ? 4 : 3;
+            const industryRank = Math.max(1, Math.floor(23 - (maturityProgress - 78) / 2));
+            const industryPercentile = Math.ceil((1 - industryRank / 150) * 100);
+
             const currentRecommendations = recommendations[selectedIndustry] || [];
             const tiAlerts = threatIntelligence[selectedIndustry] || [];
             const currentAnomalies = anomalies[selectedIndustry] || anomalies.banking;
@@ -2007,15 +2152,30 @@
                             
                             <div className="controls">
                                 <div className="control-group">
-                                    <label>Industry Vertical</label>
-                                    <select value={selectedIndustry} onChange={(e) => setSelectedIndustry(e.target.value)}>
-                                        {Object.entries(industries).map(([key, value]) => (
-                                            <option key={key} value={key}>{value.name}</option>
-                                        ))}
-                                    </select>
+                                    <label>Security Maturity Score</label>
+                                    <div style={{ 
+                                        padding: '10px',
+                                        background: '#0f172a',
+                                        border: '1px solid #334155',
+                                        borderRadius: '6px',
+                                        fontSize: '14px',
+                                        color: '#e2e8f0',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '8px',
+                                        height: '42px'
+                                    }}>
+                                        <span style={{ fontSize: '16px' }}>🏆</span>
+                                        <span style={{ fontWeight: '600', color: '#00BCD4' }}>
+                                            {maturityProgress}/100
+                                        </span>
+                                        <span style={{ color: '#64748b' }}>
+                                            (L{maturityLevel} • #{industryRank}/150)
+                                        </span>
+                                    </div>
                                 </div>
                                 <div className="control-group">
-                                    <label>Risk Threshold ({industry.currency}{industry.suffix})</label>
+                                    <label>Risk Threshold ($M)</label>
                                     <input 
                                         type="number" 
                                         value={riskThreshold} 
@@ -2026,7 +2186,7 @@
                                     />
                                 </div>
                                 <div className="control-group">
-                                    <label>Base Risk ({industry.currency}{industry.suffix})</label>
+                                    <label>Base Risk ($M)</label>
                                     <input 
                                         type="number" 
                                         value={baseRisk} 
