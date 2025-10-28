@@ -1679,10 +1679,7 @@
                             </button>
                             <button 
                                 className="action-button" 
-                                onClick={() => {
-                                    onProceed();
-                                    onClose();
-                                }}
+                                onClick={onProceed}
                                 style={{ flex: 1 }}
                             >
                                 ✓ Proceed
@@ -1720,11 +1717,14 @@
             }, [step, progress]);
             
             const handleConfirm = () => {
+                // Apply the fix immediately when user confirms
+                onConfirm();
                 setStep('executing');
                 setProgress(0);
             };
             
             const handleComplete = () => {
+                // Apply the fix after animation completes
                 onConfirm();
                 onClose();
             };
@@ -1896,6 +1896,11 @@
                 // Completed IT tasks add progress
                 baseScore += Math.min(completedTaskReductions * 5, 22);
                 
+                // Automatic access control enabled adds progress
+                if (autoAccessControlEnabled) {
+                    baseScore += 5;
+                }
+                
                 // Cap at 100%
                 return Math.min(baseScore, 100);
             };
@@ -1948,11 +1953,13 @@
                     const newApplied = new Set(appliedFixes);
                     newApplied.add(selectedRecommendation.id);
                     setAppliedFixes(newApplied);
+                    setSelectedRecommendation(null);
                 }
             };
             
             const handlePremiumFeature = (featureKey) => {
-                if (unlockedFeatures.has(featureKey)) {
+                // Always show premium modal for aiAutoFix, skip for other features if already unlocked
+                if (featureKey !== 'aiAutoFix' && unlockedFeatures.has(featureKey)) {
                     // Feature already unlocked, proceed directly
                     return true;
                 }
@@ -2076,14 +2083,16 @@
                         mcpDiscovery: selectedPremiumFeature.title.includes('MCP'),
                         advancedTI: selectedPremiumFeature.title.includes('Threat Intelligence'),
                         attackPath: selectedPremiumFeature.title.includes('Attack Path'),
-                        autoAccessControl: selectedPremiumFeature.title.includes('Access Control')
+                        autoAccessControl: selectedPremiumFeature.title.includes('Access Control'),
+                        aiAutoFix: selectedPremiumFeature.title.includes('Auto-Fix')
                     }).find(key => {
                         const match = {
                             aiAgent: selectedPremiumFeature.title.includes('AI Agent'),
                             mcpDiscovery: selectedPremiumFeature.title.includes('MCP'),
                             advancedTI: selectedPremiumFeature.title.includes('Threat Intelligence'),
                             attackPath: selectedPremiumFeature.title.includes('Attack Path'),
-                            autoAccessControl: selectedPremiumFeature.title.includes('Access Control')
+                            autoAccessControl: selectedPremiumFeature.title.includes('Access Control'),
+                            aiAutoFix: selectedPremiumFeature.title.includes('Auto-Fix')
                         };
                         return match[key];
                     });
@@ -2095,6 +2104,19 @@
                         
                         if (featureKey === 'autoAccessControl') {
                             setAutoAccessControlEnabled(true);
+                        }
+                        
+                        // If unlocking AI Auto-Fix, open the rollback modal
+                        if (featureKey === 'aiAutoFix' && selectedRecommendation) {
+                            setShowPremiumModal(false);
+                            setSelectedPremiumFeature(null);
+                            // Open the rollback/AI modal
+                            setShowAIModal(true);
+                        } else {
+                            // For other features, just close the modal
+                            setShowPremiumModal(false);
+                            setSelectedPremiumFeature(null);
+                            setSelectedRecommendation(null);
                         }
                     }
                 }
@@ -2650,7 +2672,7 @@
                                             </div>
                                         </div>
                                         
-                                        {!appliedFixes.has(rec.id) && (
+                                        {!appliedFixes.has(rec.id) && !assignedTaskIds.has(rec.id) ? (
                                             <div className="recommendation-actions">
                                                 <button 
                                                     className="apply-button secondary"
@@ -2666,29 +2688,51 @@
                                                     <button 
                                                         className="apply-button ai"
                                                         onClick={() => {
-                                                            if (!unlockedFeatures.has('aiAutoFix')) {
-                                                                handlePremiumFeature('aiAutoFix');
-                                                            } else {
-                                                                handleAIFix(rec);
-                                                            }
+                                                            setSelectedRecommendation(rec);
+                                                            handlePremiumFeature('aiAutoFix');
                                                         }}
                                                     >
-                                                        🤖 Auto-Fix via Saviynt AI {!unlockedFeatures.has('aiAutoFix') && '🔒'}
+                                                        🤖 Fix via Saviynt AI
                                                     </button>
                                                 )}
                                                 <button 
                                                     className="apply-button secondary"
                                                     onClick={() => onAssignPriority(rec)}
-                                                    disabled={assignedTaskIds.has(rec.id)}
-                                                    style={{
-                                                        opacity: assignedTaskIds.has(rec.id) ? 0.5 : 1,
-                                                        cursor: assignedTaskIds.has(rec.id) ? 'not-allowed' : 'pointer'
-                                                    }}
                                                 >
-                                                    {assignedTaskIds.has(rec.id) ? '✓ Assigned to IT' : 'Assign to IT'}
+                                                    Assign to IT
                                                 </button>
                                             </div>
-                                        )}
+                                        ) : (appliedFixes.has(rec.id) || assignedTaskIds.has(rec.id)) ? (
+                                            <div className="recommendation-actions">
+                                                {rec.automatable && (
+                                                    <button 
+                                                        className="apply-button ai"
+                                                        disabled
+                                                        style={{
+                                                            opacity: 0.6,
+                                                            cursor: 'not-allowed',
+                                                            background: 'linear-gradient(135deg, #00C48C 0%, #00A067 100%)',
+                                                            color: '#fff'
+                                                        }}
+                                                    >
+                                                        ✓ Fixed by Saviynt AI
+                                                    </button>
+                                                )}
+                                                {assignedTaskIds.has(rec.id) && !appliedFixes.has(rec.id) && (
+                                                    <button 
+                                                        className="apply-button secondary"
+                                                        disabled
+                                                        style={{
+                                                            opacity: 0.5,
+                                                            cursor: 'not-allowed',
+                                                            background: 'linear-gradient(135deg, #64748b 0%, #475569 100%)'
+                                                        }}
+                                                    >
+                                                        ✓ Assigned to IT
+                                                    </button>
+                                                )}
+                                            </div>
+                                        ) : null}
                                     </div>
                                 ))}
                             </div>
@@ -2713,6 +2757,7 @@
                             onClose={() => {
                                 setShowPremiumModal(false);
                                 setSelectedPremiumFeature(null);
+                                setSelectedRecommendation(null);
                             }}
                             onProceed={handleProceedPremium}
                         />
