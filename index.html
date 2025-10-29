@@ -6,7 +6,7 @@
     <title>Saviynt NHI Security Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -65,7 +65,7 @@
         .persona-card {
             background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
             border: 2px solid #334155;
-            border-radius: 16px;
+            border-radius: 12px;
             padding: 48px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -80,13 +80,13 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #00BCD4 0%, #00A9CE 100%);
+            background: linear-gradient(90deg, #0EA5E9 0%, #0284C7 100%);
             transform: scaleX(0);
             transition: transform 0.3s ease;
         }
         
         .persona-card:hover {
-            border-color: #00BCD4;
+            border-color: #0EA5E9;
             transform: translateY(-8px);
             box-shadow: 0 12px 24px rgba(0, 188, 212, 0.3);
         }
@@ -109,7 +109,7 @@
         
         .persona-role {
             font-size: 16px;
-            color: #00BCD4;
+            color: #0EA5E9;
             margin-bottom: 24px;
             font-weight: 600;
         }
@@ -129,7 +129,7 @@
         
         .persona-features li::before {
             content: '✓ ';
-            color: #00BCD4;
+            color: #0EA5E9;
             font-weight: bold;
             margin-right: 8px;
         }
@@ -161,7 +161,7 @@
         .saviynt-logo {
             font-size: 24px;
             font-weight: bold;
-            color: #00BCD4;
+            color: #0EA5E9;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -179,10 +179,10 @@
         
         .persona-badge {
             background: rgba(0, 188, 212, 0.1);
-            border: 1px solid #00BCD4;
-            color: #00BCD4;
+            border: 1px solid #0EA5E9;
+            color: #0EA5E9;
             padding: 6px 16px;
-            border-radius: 20px;
+            border-radius: 12px;
             font-size: 14px;
             font-weight: 600;
         }
@@ -192,15 +192,15 @@
             border: 1px solid #475569;
             color: #94a3b8;
             padding: 8px 16px;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
             transition: all 0.2s;
         }
         
         .switch-persona-btn:hover {
-            border-color: #00BCD4;
-            color: #00BCD4;
+            border-color: #0EA5E9;
+            color: #0EA5E9;
         }
         
         .reset-simulation-btn {
@@ -208,7 +208,7 @@
             border: 1px solid #E63946;
             color: #E63946;
             padding: 8px 16px;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
             transition: all 0.2s;
@@ -223,10 +223,10 @@
         
         .nhi-ratio-badge {
             background: rgba(0, 188, 212, 0.1);
-            border: 1px solid #00BCD4;
-            color: #00BCD4;
+            border: 1px solid #0EA5E9;
+            color: #0EA5E9;
             padding: 10px 20px;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 16px;
             font-weight: 700;
         }
@@ -236,7 +236,7 @@
             top: 80px;
             right: 20px;
             background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
-            border: 2px solid #00C48C;
+            border: 2px solid #10B981;
             border-radius: 12px;
             padding: 20px 24px;
             min-width: 300px;
@@ -376,7 +376,7 @@
             padding: 10px;
             background: #0f172a;
             border: 1px solid #334155;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 14px;
             color: #e2e8f0;
             transition: border-color 0.2s;
@@ -385,7 +385,7 @@
         .control-group select:focus,
         .control-group input:focus {
             outline: none;
-            border-color: #00BCD4;
+            border-color: #0EA5E9;
         }
         
         .grid {
@@ -407,10 +407,11 @@
             border: 1px solid #334155;
             border-radius: 12px;
             padding: 32px;
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
         }
         
         .card-title {
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 600;
             color: #94a3b8;
             margin-bottom: 24px;
@@ -443,13 +444,17 @@
             border-radius: 50%;
             background: conic-gradient(
                 from 180deg,
-                #00C48C 0%,
-                #00C48C 33%,
-                #FF6B35 33%,
-                #FF6B35 66%,
+                #10B981 0%,
+                #10B981 28%,
+                #34D399 30%,
+                #FCD34D 32%,
+                #FF6B35 34%,
+                #FF6B35 62%,
+                #F87171 64%,
                 #E63946 66%,
                 #E63946 100%
             );
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.2);
         }
         
         .dial-center {
@@ -460,18 +465,21 @@
             width: 160px;
             height: 160px;
             border-radius: 50%;
-            background: #0f172a;
+            background: radial-gradient(circle at 30% 30%, #1e293b 0%, #0f172a 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.05);
         }
         
         .dial-value {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: bold;
             color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+            text-shadow: 0 2px 8px rgba(14, 165, 233, 0.5), 0 0 20px rgba(14, 165, 233, 0.3);
+            letter-spacing: -0.5px;
         }
         
         .dial-label {
@@ -485,12 +493,25 @@
             bottom: 50%;
             left: 50%;
             transform-origin: bottom center;
-            width: 3px;
+            width: 4px;
             height: 90px;
-            background: #ffffff;
+            background: linear-gradient(180deg, #0EA5E9 0%, #ffffff 100%);
             border-radius: 3px;
-            transition: transform 0.5s ease;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            transition: transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.8), 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        .dial-needle::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: #0EA5E9;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(14, 165, 233, 0.8);
         }
         
         .risk-summary {
@@ -498,7 +519,7 @@
             padding: 20px;
             background: rgba(0, 188, 212, 0.05);
             border: 1px solid rgba(0, 188, 212, 0.2);
-            border-radius: 8px;
+            border-radius: 12px;
         }
         
         .risk-row {
@@ -527,10 +548,10 @@
         .action-button {
             width: 100%;
             padding: 12px 20px;
-            background: linear-gradient(135deg, #00BCD4 0%, #00A9CE 100%);
+            background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
@@ -573,7 +594,7 @@
         
         .ti-alert {
             padding: 16px;
-            border-radius: 8px;
+            border-radius: 12px;
             margin-bottom: 16px;
             border-left: 4px solid;
             animation: slideIn 0.3s ease;
@@ -602,7 +623,7 @@
         }
         
         .ti-alert.medium {
-            border-color: #00BCD4;
+            border-color: #0EA5E9;
             background: rgba(0, 188, 212, 0.1);
         }
         
@@ -623,7 +644,7 @@
             font-size: 11px;
             font-weight: 600;
             padding: 2px 8px;
-            border-radius: 4px;
+            border-radius: 6px;
             text-transform: uppercase;
         }
         
@@ -638,7 +659,7 @@
         }
         
         .ti-alert.medium .ti-alert-severity {
-            background: #00BCD4;
+            background: #0EA5E9;
             color: #0f172a;
         }
         
@@ -666,7 +687,7 @@
             padding: 20px;
             background: rgba(0, 188, 212, 0.05);
             border: 1px solid rgba(0, 188, 212, 0.2);
-            border-radius: 8px;
+            border-radius: 12px;
         }
         
         .metric-label {
@@ -680,6 +701,7 @@
             font-size: 24px;
             font-weight: bold;
             color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
         }
         
         .metric-trend {
@@ -692,13 +714,13 @@
         }
         
         .metric-trend.down {
-            color: #00C48C;
+            color: #10B981;
         }
         
         /* Security Maturity Styles */
         .maturity-container {
             background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
-            border: 2px solid #00BCD4;
+            border: 2px solid #0EA5E9;
             border-radius: 12px;
             padding: 32px;
             margin-bottom: 28px;
@@ -740,9 +762,10 @@
         .maturity-rank-number {
             font-size: 32px;
             font-weight: 700;
-            color: #00BCD4;
+            color: #0EA5E9;
             line-height: 1;
             margin-bottom: 4px;
+            font-family: 'JetBrains Mono', monospace;
         }
         
         .maturity-rank-label {
@@ -771,20 +794,21 @@
         .maturity-progress-value {
             font-size: 16px;
             font-weight: 700;
-            color: #00BCD4;
+            color: #0EA5E9;
+            font-family: 'JetBrains Mono', monospace;
         }
         
         .maturity-progress-bar {
             height: 12px;
             background: rgba(0, 0, 0, 0.5);
-            border-radius: 6px;
+            border-radius: 8px;
             overflow: hidden;
             border: 1px solid #334155;
         }
         
         .maturity-progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #00BCD4 0%, #00C48C 100%);
+            background: linear-gradient(90deg, #0EA5E9 0%, #10B981 100%);
             transition: width 0.5s ease;
             display: flex;
             align-items: center;
@@ -803,7 +827,7 @@
             padding: 16px;
             background: rgba(0, 188, 212, 0.05);
             border: 1px solid rgba(0, 188, 212, 0.2);
-            border-radius: 8px;
+            border-radius: 12px;
         }
         
         .maturity-stat-value {
@@ -811,6 +835,7 @@
             font-weight: 700;
             color: #fff;
             margin-bottom: 4px;
+            font-family: 'JetBrains Mono', monospace;
         }
         
         .maturity-stat-label {
@@ -850,7 +875,7 @@
         .status-badge {
             display: inline-block;
             padding: 5px 10px;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 11px;
             font-weight: 600;
         }
@@ -869,14 +894,14 @@
         
         .status-badge.medium {
             background: rgba(0, 188, 212, 0.2);
-            color: #00BCD4;
-            border: 1px solid #00BCD4;
+            color: #0EA5E9;
+            border: 1px solid #0EA5E9;
         }
         
         .status-badge.low {
             background: rgba(0, 196, 140, 0.2);
-            color: #00C48C;
-            border: 1px solid #00C48C;
+            color: #10B981;
+            border: 1px solid #10B981;
         }
         
         /* Recommendations */
@@ -888,15 +913,15 @@
         .recommendation {
             padding: 20px;
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
+            border-radius: 12px;
             margin-bottom: 16px;
-            border-left: 4px solid #00BCD4;
+            border-left: 4px solid #0EA5E9;
             transition: all 0.2s;
         }
         
         .recommendation.applied {
             background: rgba(0, 196, 140, 0.1);
-            border-color: #00C48C;
+            border-color: #10B981;
             opacity: 0.7;
         }
         
@@ -923,7 +948,7 @@
             font-size: 11px;
             font-weight: 600;
             padding: 4px 8px;
-            border-radius: 4px;
+            border-radius: 6px;
             text-transform: uppercase;
             margin-left: 12px;
         }
@@ -939,7 +964,7 @@
         }
         
         .recommendation-priority.medium {
-            background: #00BCD4;
+            background: #0EA5E9;
             color: #0f172a;
         }
         
@@ -962,7 +987,7 @@
             padding: 12px;
             background: rgba(0, 188, 212, 0.05);
             border: 1px solid rgba(0, 188, 212, 0.2);
-            border-radius: 6px;
+            border-radius: 8px;
         }
         
         .recommendation-metric-label {
@@ -977,10 +1002,11 @@
             font-size: 16px;
             font-weight: 600;
             color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
         }
         
         .recommendation-metric-value.positive {
-            color: #00C48C;
+            color: #10B981;
         }
         
         .recommendation-actions {
@@ -992,7 +1018,7 @@
             flex: 1;
             padding: 10px 18px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
@@ -1000,7 +1026,7 @@
         }
         
         .apply-button.primary {
-            background: linear-gradient(135deg, #00C48C 0%, #00A067 100%);
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
             color: white;
         }
         
@@ -1015,7 +1041,7 @@
         }
         
         .apply-button.ai {
-            background: linear-gradient(135deg, #00BCD4 0%, #00A9CE 100%);
+            background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
             color: white;
             position: relative;
         }
@@ -1052,15 +1078,33 @@
         
         .modal {
             background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
-            border: 2px solid #00BCD4;
-            border-radius: 16px;
+            border: 2px solid transparent;
+            border-radius: 12px;
             padding: 40px;
             max-width: 600px;
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
             animation: slideUp 0.3s ease;
-            box-shadow: 0 20px 60px rgba(0, 188, 212, 0.3);
+            box-shadow: 0 20px 60px rgba(14, 165, 233, 0.3);
+            position: relative;
+            background-clip: padding-box;
+        }
+
+        .modal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 12px;
+            padding: 2px;
+            background: linear-gradient(135deg, #0EA5E9 0%, #10B981 50%, #0EA5E9 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
         }
         
         @keyframes slideUp {
@@ -1106,8 +1150,8 @@
         
         .ai-agent-status {
             background: rgba(0, 188, 212, 0.1);
-            border: 1px solid #00BCD4;
-            border-radius: 8px;
+            border: 1px solid #0EA5E9;
+            border-radius: 12px;
             padding: 20px;
             margin-bottom: 24px;
         }
@@ -1136,11 +1180,11 @@
         }
         
         .ai-step.completed {
-            color: #00C48C;
+            color: #10B981;
         }
         
         .ai-step.in-progress {
-            color: #00BCD4;
+            color: #0EA5E9;
         }
         
         .ai-step.pending {
@@ -1150,7 +1194,7 @@
         .rollback-risk {
             background: rgba(230, 57, 70, 0.1);
             border: 1px solid #E63946;
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 16px;
             margin-bottom: 20px;
         }
@@ -1182,7 +1226,7 @@
         
         .queue-section {
             border: 1px solid;
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 16px;
         }
         
@@ -1197,7 +1241,7 @@
         }
         
         .queue-section.scheduled {
-            border-color: #00C48C;
+            border-color: #10B981;
             background: rgba(0, 196, 140, 0.05);
         }
         
@@ -1230,7 +1274,7 @@
             gap: 12px;
             padding: 12px;
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 6px;
+            border-radius: 8px;
             margin-bottom: 8px;
         }
         
@@ -1241,7 +1285,7 @@
         }
         
         .system-status-indicator.healthy {
-            background: #00C48C;
+            background: #10B981;
             box-shadow: 0 0 10px rgba(0, 196, 140, 0.5);
         }
         
@@ -1266,7 +1310,7 @@
         
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #00BCD4 0%, #00C48C 100%);
+            background: linear-gradient(90deg, #0EA5E9 0%, #10B981 100%);
             transition: width 0.5s ease;
             display: flex;
             align-items: center;
@@ -1284,11 +1328,11 @@
         }
         
         .health-score.excellent {
-            color: #00C48C;
+            color: #10B981;
         }
         
         .health-score.good {
-            color: #00BCD4;
+            color: #0EA5E9;
         }
         
         .health-score.fair {
@@ -1306,24 +1350,26 @@
         }
         
         .impact-summary {
-            background: linear-gradient(135deg, #00BCD4 0%, #00A9CE 100%);
+            background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
             color: white;
-            padding: 16px;
-            border-radius: 8px;
+            padding: 12px 16px;
+            border-radius: 12px;
             margin-bottom: 24px;
         }
 
         .impact-summary-title {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .impact-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
+            gap: 10px;
         }
 
         .impact-stat {
@@ -1331,28 +1377,29 @@
         }
 
         .impact-stat-value {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .impact-stat-label {
-            font-size: 11px;
+            font-size: 10px;
             opacity: 0.9;
         }
         
         .ciso-feed-item {
             padding: 16px;
             background: rgba(0, 196, 140, 0.1);
-            border-left: 3px solid #00C48C;
-            border-radius: 6px;
+            border-left: 3px solid #10B981;
+            border-radius: 8px;
             margin-bottom: 12px;
             font-size: 13px;
             line-height: 1.6;
         }
         
         .ciso-feed-item strong {
-            color: #00C48C;
+            color: #10B981;
         }
         
         .ciso-feed-item .timestamp {
@@ -1637,12 +1684,12 @@
                             
                             <div style={{ 
                                 background: 'rgba(0, 188, 212, 0.1)',
-                                border: '1px solid #00BCD4',
+                                border: '1px solid #0EA5E9',
                                 borderRadius: '8px',
                                 padding: '16px',
                                 marginBottom: '20px'
                             }}>
-                                <div style={{ fontSize: '13px', fontWeight: '600', color: '#00BCD4', marginBottom: '12px' }}>
+                                <div style={{ fontSize: '13px', fontWeight: '600', color: '#0EA5E9', marginBottom: '12px' }}>
                                     What you'll get:
                                 </div>
                                 <ul style={{ margin: 0, paddingLeft: '20px' }}>
@@ -1657,12 +1704,12 @@
                             {feature.impact && (
                                 <div style={{ 
                                     background: 'rgba(0, 196, 140, 0.1)',
-                                    border: '1px solid #00C48C',
+                                    border: '1px solid #10B981',
                                     borderRadius: '8px',
                                     padding: '16px',
                                     marginBottom: '20px'
                                 }}>
-                                    <div style={{ fontSize: '13px', fontWeight: '600', color: '#00C48C', marginBottom: '12px' }}>
+                                    <div style={{ fontSize: '13px', fontWeight: '600', color: '#10B981', marginBottom: '12px' }}>
                                         Average Impact:
                                     </div>
                                     {feature.impact.map((item, idx) => (
@@ -1768,7 +1815,7 @@
                                 
                                 <div style={{ 
                                     background: 'rgba(0, 188, 212, 0.1)',
-                                    border: '1px solid #00BCD4',
+                                    border: '1px solid #0EA5E9',
                                     borderRadius: '8px',
                                     padding: '16px',
                                     marginBottom: '20px'
@@ -1776,7 +1823,7 @@
                                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
                                         <div>
                                             <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '4px' }}>Risk Reduction</div>
-                                            <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#00C48C' }}>
+                                            <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#10B981' }}>
                                                 -{industry.currency}{recommendation.riskReduction}{industry.suffix}
                                             </div>
                                         </div>
@@ -1818,7 +1865,7 @@
                                         <div style={{ fontSize: '16px', fontWeight: '600', color: '#fff' }}>
                                             Status: In Progress
                                         </div>
-                                        <div style={{ fontSize: '14px', color: '#00BCD4' }}>
+                                        <div style={{ fontSize: '14px', color: '#0EA5E9' }}>
                                             {progress}%
                                         </div>
                                     </div>
@@ -1855,7 +1902,7 @@
                             <>
                                 <div style={{ textAlign: 'center', padding: '40px 20px' }}>
                                     <div style={{ fontSize: '64px', marginBottom: '20px' }}>✅</div>
-                                    <h3 style={{ color: '#00C48C', fontSize: '24px', marginBottom: '12px' }}>
+                                    <h3 style={{ color: '#10B981', fontSize: '24px', marginBottom: '12px' }}>
                                         Fix Applied Successfully!
                                     </h3>
                                     <p style={{ color: '#94a3b8', fontSize: '14px' }}>
@@ -2176,7 +2223,7 @@
                                 <div style={{
                                     marginTop: '16px',
                                     padding: '16px',
-                                    background: 'linear-gradient(135deg, #00C48C 0%, #00A067 100%)',
+                                    background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
                                     borderRadius: '8px',
                                     color: 'white'
                                 }}>
@@ -2208,7 +2255,7 @@
                                         height: '42px'
                                     }}>
                                         <span style={{ fontSize: '16px' }}>🏆</span>
-                                        <span style={{ fontWeight: '600', color: '#00BCD4' }}>
+                                        <span style={{ fontWeight: '600', color: '#0EA5E9' }}>
                                             {maturityProgress}/100
                                         </span>
                                         <span style={{ color: '#64748b' }}>
@@ -2281,7 +2328,7 @@
                                     {aiFixRiskReduction > 0 && (
                                         <div className="risk-row">
                                             <span className="risk-label">Saviynt AI:</span>
-                                            <span className="risk-value" style={{ color: '#00C48C' }}>
+                                            <span className="risk-value" style={{ color: '#10B981' }}>
                                                 -{industry.currency}{aiFixRiskReduction.toFixed(1)}{industry.suffix}
                                             </span>
                                         </div>
@@ -2289,7 +2336,7 @@
                                     {autoAccessControlReduction > 0 && (
                                         <div className="risk-row">
                                             <span className="risk-label">Auto Access Control:</span>
-                                            <span className="risk-value" style={{ color: '#00BCD4' }}>
+                                            <span className="risk-value" style={{ color: '#0EA5E9' }}>
                                                 -{industry.currency}{autoAccessControlReduction.toFixed(1)}{industry.suffix}
                                             </span>
                                         </div>
@@ -2297,7 +2344,7 @@
                                     {completedTaskReductions > 0 && (
                                         <div className="risk-row">
                                             <span className="risk-label">IT Completed:</span>
-                                            <span className="risk-value" style={{ color: '#00BCD4' }}>
+                                            <span className="risk-value" style={{ color: '#0EA5E9' }}>
                                                 -{industry.currency}{completedTaskReductions.toFixed(1)}{industry.suffix}
                                             </span>
                                         </div>
@@ -2518,7 +2565,7 @@
                                                        anomaly.severity === 'high' ? 'rgba(255, 107, 53, 0.1)' :
                                                        'rgba(0, 188, 212, 0.1)',
                                             border: `1px solid ${anomaly.severity === 'critical' ? '#E63946' :
-                                                                   anomaly.severity === 'high' ? '#FF6B35' : '#00BCD4'}`,
+                                                                   anomaly.severity === 'high' ? '#FF6B35' : '#0EA5E9'}`,
                                             borderRadius: '8px',
                                             marginBottom: '12px'
                                         }}>
@@ -2545,10 +2592,10 @@
                                                     marginTop: '12px',
                                                     padding: '8px',
                                                     background: 'rgba(0, 196, 140, 0.2)',
-                                                    border: '1px solid #00C48C',
+                                                    border: '1px solid #10B981',
                                                     borderRadius: '4px',
                                                     fontSize: '11px',
-                                                    color: '#00C48C',
+                                                    color: '#10B981',
                                                     fontWeight: '600'
                                                 }}>
                                                     ✓ Auto-blocked by Saviynt AI
@@ -2569,7 +2616,7 @@
                                     disabled={autoAccessControlEnabled}
                                     style={{
                                         opacity: autoAccessControlEnabled ? 0.7 : 1,
-                                        background: autoAccessControlEnabled ? 'linear-gradient(135deg, #00C48C 0%, #00A067 100%)' : undefined
+                                        background: autoAccessControlEnabled ? 'linear-gradient(135deg, #10B981 0%, #059669 100%)' : undefined
                                     }}
                                 >
                                     {autoAccessControlEnabled ? '✓ Automatic Access Control Active' : '🤖 Enforce Automatic Access Control'}
@@ -2747,7 +2794,7 @@
                                                         style={{
                                                             opacity: 0.6,
                                                             cursor: 'not-allowed',
-                                                            background: 'linear-gradient(135deg, #00C48C 0%, #00A067 100%)',
+                                                            background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
                                                             color: '#fff'
                                                         }}
                                                     >
@@ -3062,8 +3109,8 @@
                                     </div>
                                 </div>
                                 
-                                <div style={{ padding: '10px', background: 'rgba(0, 196, 140, 0.1)', border: '1px solid #00C48C', borderRadius: '6px' }}>
-                                    <div style={{ fontSize: '13px', fontWeight: '600', color: '#00C48C' }}>
+                                <div style={{ padding: '10px', background: 'rgba(0, 196, 140, 0.1)', border: '1px solid #10B981', borderRadius: '6px' }}>
+                                    <div style={{ fontSize: '13px', fontWeight: '600', color: '#10B981' }}>
                                         🟢 Managed: 1
                                     </div>
                                 </div>
@@ -3141,10 +3188,10 @@
                                     <div style={{ 
                                         padding: '10px', 
                                         background: 'rgba(0, 196, 140, 0.1)', 
-                                        border: '1px solid #00C48C', 
+                                        border: '1px solid #10B981', 
                                         borderRadius: '6px' 
                                     }}>
-                                        <div style={{ fontSize: '12px', fontWeight: '600', color: '#00C48C', marginBottom: '4px' }}>
+                                        <div style={{ fontSize: '12px', fontWeight: '600', color: '#10B981', marginBottom: '4px' }}>
                                             ✅ Credential Rotated
                                         </div>
                                         <div style={{ fontSize: '11px', color: '#e2e8f0', marginBottom: '4px' }}>
@@ -3158,10 +3205,10 @@
                                     <div style={{ 
                                         padding: '10px', 
                                         background: 'rgba(0, 188, 212, 0.1)', 
-                                        border: '1px solid #00BCD4', 
+                                        border: '1px solid #0EA5E9', 
                                         borderRadius: '6px' 
                                     }}>
-                                        <div style={{ fontSize: '12px', fontWeight: '600', color: '#00BCD4', marginBottom: '4px' }}>
+                                        <div style={{ fontSize: '12px', fontWeight: '600', color: '#0EA5E9', marginBottom: '4px' }}>
                                             🆕 New NHI Created
                                         </div>
                                         <div style={{ fontSize: '11px', color: '#e2e8f0', marginBottom: '4px' }}>
@@ -3192,10 +3239,10 @@
                                     <div style={{ 
                                         padding: '10px', 
                                         background: 'rgba(0, 196, 140, 0.1)', 
-                                        border: '1px solid #00C48C', 
+                                        border: '1px solid #10B981', 
                                         borderRadius: '6px' 
                                     }}>
-                                        <div style={{ fontSize: '12px', fontWeight: '600', color: '#00C48C', marginBottom: '4px' }}>
+                                        <div style={{ fontSize: '12px', fontWeight: '600', color: '#10B981', marginBottom: '4px' }}>
                                             ✅ Certificate Renewed
                                         </div>
                                         <div style={{ fontSize: '11px', color: '#e2e8f0', marginBottom: '4px' }}>
@@ -3209,10 +3256,10 @@
                                     <div style={{ 
                                         padding: '10px', 
                                         background: 'rgba(0, 188, 212, 0.1)', 
-                                        border: '1px solid #00BCD4', 
+                                        border: '1px solid #0EA5E9', 
                                         borderRadius: '6px' 
                                     }}>
-                                        <div style={{ fontSize: '12px', fontWeight: '600', color: '#00BCD4', marginBottom: '4px' }}>
+                                        <div style={{ fontSize: '12px', fontWeight: '600', color: '#0EA5E9', marginBottom: '4px' }}>
                                             🔄 Access Revoked
                                         </div>
                                         <div style={{ fontSize: '11px', color: '#e2e8f0', marginBottom: '4px' }}>
@@ -3332,7 +3379,7 @@
                             <div style={{ marginTop: '16px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
                                 <div>
                                     <div style={{ fontSize: '11px', color: '#94a3b8' }}>Completed</div>
-                                    <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#00C48C' }}>52</div>
+                                    <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#10B981' }}>52</div>
                                 </div>
                                 <div>
                                     <div style={{ fontSize: '11px', color: '#94a3b8' }}>Failed</div>
@@ -3401,7 +3448,7 @@
                                     <div key={idx} style={{
                                         padding: '16px',
                                         background: 'rgba(0, 188, 212, 0.1)',
-                                        border: '1px solid #00BCD4',
+                                        border: '1px solid #0EA5E9',
                                         borderRadius: '8px'
                                     }}>
                                         <div style={{ fontSize: '14px', fontWeight: '600', color: '#fff', marginBottom: '8px' }}>
@@ -3446,7 +3493,7 @@
                                                anomaly.severity === 'high' ? 'rgba(255, 107, 53, 0.1)' : 
                                                'rgba(0, 188, 212, 0.1)',
                                     border: `1px solid ${anomaly.severity === 'critical' ? '#E63946' : 
-                                                           anomaly.severity === 'high' ? '#FF6B35' : '#00BCD4'}`,
+                                                           anomaly.severity === 'high' ? '#FF6B35' : '#0EA5E9'}`,
                                     borderRadius: '8px',
                                     marginBottom: '8px'
                                 }}>
@@ -3478,7 +3525,7 @@
                                             <span style={{ fontSize: '16px' }}>
                                                 {actedAnomalies[anomaly.id] === 'investigate' ? '🔍' : '🚫'}
                                             </span>
-                                            <span style={{ fontSize: '12px', fontWeight: '600', color: '#00C48C' }}>
+                                            <span style={{ fontSize: '12px', fontWeight: '600', color: '#10B981' }}>
                                                 {actedAnomalies[anomaly.id] === 'investigate' ? 'Investigation In Progress' : 'Blocked Successfully'}
                                             </span>
                                         </div>
